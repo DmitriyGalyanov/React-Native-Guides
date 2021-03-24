@@ -7,15 +7,9 @@ import {
 	Text, TextStyle,
 	// @ts-ignore
 } from 'react-native';
-// @ts-ignore
-import { ScoreIndicator } from './ScoreIndicator';
-import { ActionButton } from './ActionButton';
-
 
 import {
-	orange,
 	overlayBgColor,
-	white,
 	windowHeight,
 	windowWidth,
 	// @ts-ignore
