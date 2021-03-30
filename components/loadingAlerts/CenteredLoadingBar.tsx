@@ -1,30 +1,30 @@
-// @ts-ignore
+//@ts-nocheck
 import React, { useEffect, useRef } from 'react';
 
-// @ts-ignore
-import {View, Text, StyleSheet, Animated, ViewStyle, TextStyle} from 'react-native';
+import {
+	View, Text, StyleSheet, Animated, ViewStyle, TextStyle} from 'react-native';
 
-// @ts-ignore
-import { windowWidth } from '../constants';
-import { animateValue } from '../../helpers';
+import {
+	windowWidth,
+	loadingAlertInitProgress,
+	loadingAlertMaxProgress,
+	loadingAlertAnimDuration,
+	loadingAlertText,
+	loadingAlertColor1,
+	loadingAlertColor2,
+} from '../constants';
+import { animateValue } from '../helpers';
 
 
-const initialProgress: number = 0;
-const maxProgress: number = 90;
-const animDuration: number = 3000;
-
-export function CenteredLoadingBar(
-	{alertText, progressBarColor, alertTextColor}:
-		{alertText: string, progressBarColor: string, alertTextColor: string}
-	// @ts-ignore
-): JSX.Element {
-	const progressBarWidth = useRef(new Animated.Value(initialProgress));
+export function CenteredLoadingBar(): JSX.Element {
+	const progressBarWidth =
+		useRef(new Animated.Value(loadingAlertInitProgress));
 
 	const animProgressBar = (): void => {
 		animateValue(
 			progressBarWidth,
-			maxProgress,
-			animDuration,
+			loadingAlertMaxProgress,
+			loadingAlertAnimDuration,
 		);
 	};
 
@@ -34,10 +34,8 @@ export function CenteredLoadingBar(
 
 	return (
 		<View style={styles.wrap}>
-			<Text style={[styles.text, {
-				color: alertTextColor,
-			}]}>
-				{alertText}
+			<Text style={styles.text}>
+				{loadingAlertText}
 			</Text>
 			<View
 				style={{
@@ -57,7 +55,7 @@ export function CenteredLoadingBar(
 							inputRange: [0, 100],
 							outputRange: ['0%', '100%'],
 						}),
-						backgroundColor: progressBarColor,
+						backgroundColor: loadingAlertColor2,
 					}}
 				/>
 			</View>
@@ -75,10 +73,11 @@ const styles = StyleSheet.create<Styles>({
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
-		paddingBottom: 12,
+		paddingBottom: 11,
 	},
 	text: {
-		fontSize: 16,
-		marginBottom: 12,
+		fontSize: 17,
+		marginBottom: 13,
+		color: loadingAlertColor1,
 	},
 });
