@@ -8,6 +8,16 @@ const {
 }: {width: number; height: number} = Dimensions.get('window');
 export {windowWidth, windowHeight};
 
+//styles
+//colors
+export enum colors {
+	'white' = '#fff',
+	'black' = '#000',
+	'green' = '#25CC68',
+	'gray' = '#9E9D9D',
+	'red' = '#F92762',
+};
+
 // not game-logics related
 export const appsflyerDevKey: string = 'key_here';
 
