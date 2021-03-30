@@ -1,3 +1,4 @@
+//@ts-nocheck
 /**
  * @returns random Int lesser or equal to MAX and greater or equal to MIN
  */
@@ -8,9 +9,8 @@ export const getRandomIntInclusive = (min: number, max: number): number => {
 };
 
 
-// @ts-ignore
 import React from 'react';
-// @ts-ignore
+
 import { Animated } from 'react-native';
 
 export const animateValue = (
@@ -24,7 +24,6 @@ export const animateValue = (
 	}).start();
 };
 
-// @ts-ignore
 import { Animated, Easing } from 'react-native';
 
 export const easingAnimateValue = (
@@ -82,10 +81,8 @@ import {
 	// franceTeams,
 	// portugalTeams,
 	betScore,
-	// @ts-ignore
 } from './constants';
 
-// @ts-ignore
 import { Coefficient, Match } from './types';
 
 /**
@@ -209,7 +206,6 @@ export const createMatches = () => {
 	return matchesArray;
 };
 
-// @ts-ignore
 //non-ts function (not required)
 import {teamsArray, teamsAmount} from '../assets/images/flags';
 

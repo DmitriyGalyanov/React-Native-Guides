@@ -1,13 +1,11 @@
-// @ts-ignore
+//@ts-nocheck
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
 	combineReducers,
 	configureStore,
 	getDefaultMiddleware,
-	// @ts-ignore
 } from '@reduxjs/toolkit';
-// @ts-ignore
 import { useDispatch } from 'react-redux';
 
 import {
@@ -19,7 +17,6 @@ import {
 	PERSIST,
 	PURGE,
 	REGISTER,
-	// @ts-ignore
 } from 'redux-persist';
 
 import {

@@ -1,6 +1,4 @@
-// @ts-ignore
-
-
+//@ts-nocheck
 import { logger, consoleTransport } from 'react-native-logs';
 
 export const log = logger.createLogger({

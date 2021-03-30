@@ -1,6 +1,6 @@
 # React-Native-Guides
 
-## All '_// @ts-ignore_' statements _should be removed_ (_for use_; they _should stay present here_ to suppress warnings since the Repo only has 'user-code', but not npm-modules)
+## All '_//@ts-nocheck_' statements _should be removed_ (_for use_; they _should stay present here_ to suppress warnings since the Repo only has 'user-code', but not npm-modules)
 
 
 ### Code presented here (both in files and Wiki) requires specific packages installed. They are _partly_ presented inside appropriate files. The best approach to use it is to firstly _create a React Native Project via react-native-cli or a similar tool_

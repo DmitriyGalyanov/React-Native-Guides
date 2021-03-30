@@ -1,4 +1,4 @@
-// @ts-ignore
+//@ts-nocheck
 import React from 'react';
 
 import {
@@ -6,7 +6,6 @@ import {
 	View, ViewStyle,
 	Text, TextStyle,
 	ActivityIndicator,
-	// @ts-ignore
 } from 'react-native';
 
 type indicatorSizeType = number | "small" | "large" | undefined;
@@ -14,7 +13,6 @@ type indicatorSizeType = number | "small" | "large" | undefined;
 export function CenteredAlert(
 	{alertText, indicatorSize, color}:
 		{alertText: string, indicatorSize: indicatorSizeType, color: string}
-	// @ts-ignore
 ): JSX.Element {
 	return (
 		<View style={styles.wrap}>

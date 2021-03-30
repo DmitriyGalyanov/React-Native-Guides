@@ -1,10 +1,8 @@
-// @ts-ignore
+//@ts-nocheck
 import {useState, useEffect} from 'react';
 
-// @ts-ignore
 import { DeviceEventEmitter, EmitterSubscription } from 'react-native';
 
-// @ts-ignore
 import {log} from '../logger';
 
 const EVENT_KEY: string = 'JavaDeepLinkToJs';
@@ -23,7 +21,6 @@ export const useDeepLinkUrl = (): string => {
 		.addListener(EVENT_KEY, handleEvent);
 		return () => {
 			// it works fine but TS is yelling. IDK
-			// @ts-ignore
 			DeviceEventEmitter.removeListener(listener);
 		};
 	}, []);

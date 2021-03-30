@@ -1,7 +1,6 @@
-// @ts-ignore
+//@ts-nocheck
 import React, { useState, useEffect } from 'react';
 
-// @ts-ignore
 import { StyleSheet, View, ViewStyle, Text, TextStyle } from 'react-native';
 
 
@@ -13,12 +12,10 @@ const progressInTick: number = 1;
 export function PercentageLoadingAlert(
 	{alertText, alertTextColor, percentageTextColor}:
 	{alertText: string, alertTextColor: string, percentageTextColor: string}
-	// @ts-ignore
 ): JSX.Element {
 	const [progress, setProgress] = useState<number>(initialProgress);
 
 	useEffect(() => {
-		// @ts-ignore
 		let progressTimeout: NodeJS.Timeout;
 		if (progress < maxProgress) {
 			progressTimeout = setTimeout(() => {

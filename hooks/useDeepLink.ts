@@ -1,9 +1,8 @@
+//@ts-nocheck
 //THAT ONE IS FOR NOT-DEFERRED DEEP LINKS
 
-// @ts-ignore
 import {useState, useEffect} from 'react';
 
-// @ts-ignore
 import {Linking} from 'react-native';
 
 

@@ -1,18 +1,16 @@
-// @ts-ignore
+//@ts-nocheck
 import React from 'react';
 
 import {
 	StyleSheet,
 	View, ViewStyle,
 	Text, TextStyle,
-	// @ts-ignore
 } from 'react-native';
 
 import {
 	overlayBgColor,
 	windowHeight,
 	windowWidth,
-	// @ts-ignore
 } from '../constants';
 
 /*That Component should be a 'react-native'.Modal child
@@ -24,7 +22,6 @@ eg:
 >
 	<Overlay />
 </Modal> */
-// @ts-ignore
 export function Overlay(): JSX.Element {
 
 	return (

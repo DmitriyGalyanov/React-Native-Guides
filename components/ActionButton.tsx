@@ -1,4 +1,4 @@
-// @ts-ignore
+//@ts-nocheck
 import React from 'react';
 
 import {
@@ -7,7 +7,6 @@ import {
 	TextStyle,
 	TouchableOpacity,
 	Text,
-	// @ts-ignore
 } from 'react-native';
 
 type ActionButtonProps = 	{
@@ -21,7 +20,6 @@ type ActionButtonProps = 	{
 
 export function ActionButton(
 	{onPress, disabled, mainColor, accentColor, title}: ActionButtonProps
-	// @ts-ignore
 ): JSX.Element {
 	return (
 		<TouchableOpacity

@@ -1,7 +1,6 @@
-// @ts-ignore
+//@ts-nocheck
 import {useState, useEffect} from 'react';
 
-// @ts-ignore
 import appsFlyer from 'react-native-appsflyer';
 
 
