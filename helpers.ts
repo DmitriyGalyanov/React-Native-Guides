@@ -89,7 +89,7 @@ import { Coefficient, Match } from './types';
  * function is clunky since it was made for single discipline matches creation
  * @returns array filled with matches data (objects) needed to create a PlayField
  */
-export const createMatches = () => {
+export const createMatchesComlicated = () => {
 	let matchesArray: Array<Match> = [];
 
 	let matchId: number = 1;
@@ -209,7 +209,7 @@ export const createMatches = () => {
 //non-ts function (not required)
 import {teamsArray, teamsAmount} from '../assets/images/flags';
 
-export const createMatch = () => {
+export const createMatchComplicated = () => {
 	let firstTeamId = getRandomIntInclusive(0, teamsAmount - 1);
 	let secondTeamId = getRandomIntInclusive(0, teamsAmount - 1);
 	while (secondTeamId === firstTeamId) {
@@ -336,3 +336,27 @@ export const createMatch = () => {
 	};
 };
 
+
+import { Match } from './commonTypes';
+
+export const createMatchesSimple = (): Array<Match> => {
+	let matchesArray: Array<Match> = [];
+
+	for (let i = 0; i < matchesAmount; i++) {
+		const firstTeamId: number =
+			getRandomIntInclusive(0, teamNames.length - 1);
+		let secondTeamId: number =
+			getRandomIntInclusive(0, teamNames.length - 1);
+		while (secondTeamId === firstTeamId) {
+			secondTeamId = getRandomIntInclusive(0, teamNames.length);
+		};
+
+		const match: Match = {
+			matchId: i,
+			firstTeamName: teamNames[firstTeamId],
+			secondTeamName: teamNames[secondTeamId],
+		};
+		matchesArray.push(match);
+	};
+	return matchesArray;
+};
