@@ -8,20 +8,26 @@ import {
 	ActivityIndicator,
 } from 'react-native';
 
-type indicatorSizeType = number | "small" | "large" | undefined;
+import {
+	loadingAlertColor1,
+	loadingAlertText,
+	loadingAlertIndicatorSize,
+	loadingAlertColor2,
+} from '../constants';
 
-export function CenteredAlert(
-	{alertText, indicatorSize, color}:
-		{alertText: string, indicatorSize: indicatorSizeType, color: string}
-): JSX.Element {
+
+export function CenteredAlert(): JSX.Element {
 	return (
 		<View style={styles.wrap}>
 			<Text style={[styles.text, {
-				color,
+				color: loadingAlertColor1,
 			}]}>
-				{alertText}
+				{loadingAlertText}
 			</Text>
-			<ActivityIndicator size={indicatorSize} color={color} />
+			<ActivityIndicator
+				size={loadingAlertIndicatorSize}
+				color={loadingAlertColor2}
+			/>
 		</View>
 	);
 };
@@ -39,7 +45,7 @@ const styles = StyleSheet.create<Styles>({
 		paddingBottom: 12,
 	},
 	text: {
-		fontSize: 14,
+		fontSize: 15,
 		marginBottom: 12,
 	},
 });

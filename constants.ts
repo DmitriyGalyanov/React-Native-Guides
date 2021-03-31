@@ -21,10 +21,19 @@ export enum colors {
 // not game-logics related
 export const appsflyerDevKey: string = 'key_here';
 
-//loading alert
+//loading alert(s)
+//duplicated values are commented
+//CenteredLoadingBar
 export const loadingAlertInitProgress: number = 5;
 export const loadingAlertMaxProgress: number = 92;
 export const loadingAlertAnimDuration: number = 2700;
 export const loadingAlertText: string = 'loading...';
 export const loadingAlertColor1: string = 'rgb(110,160,67)';
 export const loadingAlertColor2: string = 'rgb(159,239,97)';
+
+//CenteredAlert
+// export const loadingAlertText: string = 'loading...';
+// export const loadingAlertColor1: string = 'rgb(166,196,57)';
+// export const loadingAlertColor2: string = 'rgb(155,191,55)';
+//number between 20 and 36
+export const loadingAlertIndicatorSize: 'small' | 'large' | number = 'small';
