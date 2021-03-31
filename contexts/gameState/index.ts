@@ -25,7 +25,8 @@ export type GameAction =
 	| { type: 'setSelectedMatchId', payload: number }
 	| { type: 'setSelectedOutcomeKeyName', payload: OutcomeKeyName }
 	| { type: 'setWinningOutcomeKeyName', payload: OutcomeKeyName }
-	| { type: 'removeMatchById', payload: number };
+	| { type: 'removeMatchById', payload: number }
+	| { type: 'resetState' };
 
 export function gameReducer(state: GameState, action: GameAction)
 	: GameState {
@@ -49,8 +50,10 @@ export function gameReducer(state: GameState, action: GameAction)
 			const matchesDataDraft = state.matchesData;
 			matchesDataDraft.splice(selectedMatchIndex, 1);
 			return {...state, matchesData: matchesDataDraft};
+		case 'resetState': //works doubtfully (sometimes doesn't fully reset)
+			return initialGameState;
 		default:
-			return {...state};
+			return state;
 	}
 };
 

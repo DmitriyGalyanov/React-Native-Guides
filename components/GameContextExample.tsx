@@ -15,6 +15,21 @@ import {
 	GameStateDispatch,
 } from '../contexts/gameState';
 
+//the component should be a descendant (at any nesting level) of Context(s) Provider(s) in order to consume Context(s) value(s)
+/*
+<GameStateContext.Provider value={state}>
+	<GameStateDispatch.Provider value={dispatch}>
+		<SomeComponent>
+			...
+			<>
+			...
+			<MatchTile matchId={matchId} /> // MatchTile is our example Component
+			</>
+		</SomeComponent>
+	</GameStateDispatch.Provider>
+</GameStateContext.Provider>
+*/
+
 
 export function MatchTile(
 	{matchId}: {matchId: number}): JSX.Element {
