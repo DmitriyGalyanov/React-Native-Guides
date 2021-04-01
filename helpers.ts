@@ -360,3 +360,186 @@ export const createMatchesSimple = (): Array<Match> => {
 	};
 	return matchesArray;
 };
+
+
+// single match creation for apps with coefficients dropdowns -- start
+
+import { teamNames } from './constants';
+import { CoefficientsData, MatchData } from './types';
+
+export const createMatch = (): MatchData => {
+	const firstTeamName: string =
+		teamNames[getRandomIntInclusive(0, teamNames.length - 1)];
+	let secondTeamName: string =
+		teamNames[getRandomIntInclusive(0, teamNames.length - 1)];
+	while (secondTeamName === firstTeamName) {
+		secondTeamName =
+			teamNames[getRandomIntInclusive(0, teamNames.length - 1)];
+	};
+
+	const firstTeamWin: boolean =
+		getRandomIntInclusive(1, 100) <= 50;
+	const secondTeamWin: boolean = !firstTeamWin;
+
+	let team1Score: number = 0;
+	let team2Score: number = 0;
+	if (firstTeamWin) {
+		team1Score = getRandomIntInclusive(1, 5);
+		team2Score = getRandomIntInclusive(0, team1Score - 1);
+	} else if (secondTeamWin) {
+		team2Score = getRandomIntInclusive(1, 5);
+		team1Score = getRandomIntInclusive(0, team2Score - 1);
+	};
+	const scoreString: string = `${team1Score}:${team2Score}`;
+	const [_firstTeamTotalString, _secondTeamTotalString]: Array<string> =
+		scoreString.split(':');
+	const [firstTeamTotalNumber, secondTeamTotalNumber]: Array<number> =
+		[+_firstTeamTotalString, +_secondTeamTotalString];
+	const totalNumber = firstTeamTotalNumber + secondTeamTotalNumber;
+
+	const overtimeTrue: boolean = getRandomIntInclusive(1, 100) < 35;
+
+	const coefficients: CoefficientsData = {
+		winner: {
+			displayName: 'Кто победит',
+			keyName: 'winner',
+			firstTeamWin: {
+				keyName: 'firstTeamWin',
+				displayName: 'Команда 1',
+				value:
+					+((getRandomIntInclusive(110, 420)) / 100).toFixed(2),
+				isTrue: firstTeamWin,
+			},
+			secondTeamWin: {
+				keyName: 'secondTeamWin',
+				displayName: 'Команда 2',
+				value:
+					+((getRandomIntInclusive(110, 420)) / 100).toFixed(2),
+				isTrue: secondTeamWin,
+			},
+		},
+		total: {
+			displayName: 'Тотал',
+			keyName: 'total',
+			moreThan0_5: {
+				keyName: 'moreThan0_5',
+				displayName: 'Больше 0.5',
+				value:
+					+((getRandomIntInclusive(110, 420)) / 100).toFixed(2),
+				isTrue: totalNumber > 0.5,
+			},
+			lessThan0_5: {
+				keyName: 'lessThan0_5',
+				displayName: 'Меньше 0.5',
+				value:
+					+((getRandomIntInclusive(110, 420)) / 100).toFixed(2),
+				isTrue: totalNumber < 0.5,
+			},
+			moreThan1_5: {
+				keyName: 'moreThan1_5',
+				displayName: 'Больше 1.5',
+				value:
+					+((getRandomIntInclusive(110, 420)) / 100).toFixed(2),
+				isTrue: totalNumber > 1.5,
+			},
+			lessThan1_5: {
+				keyName: 'lessThan1_5',
+				displayName: 'Меньше 1.5',
+				value:
+					+((getRandomIntInclusive(110, 420)) / 100).toFixed(2),
+				isTrue: totalNumber < 1.5,
+			},
+		},
+		firstTeamTotal: {
+			displayName: 'Тотал команды 1',
+			keyName: 'firstTeamTotal',
+			moreThan0_5: {
+				keyName: 'moreThan0_5',
+				displayName: 'Больше 0.5',
+				value:
+					+((getRandomIntInclusive(110, 420)) / 100).toFixed(2),
+				isTrue: firstTeamTotalNumber > 0.5,
+			},
+			lessThan0_5: {
+				keyName: 'lessThan0_5',
+				displayName: 'Меньше 0.5',
+				value:
+					+((getRandomIntInclusive(110, 420)) / 100).toFixed(2),
+				isTrue: firstTeamTotalNumber < 0.5,
+			},
+			moreThan1_5: {
+				keyName: 'moreThan1_5',
+				displayName: 'Больше 1.5',
+				value:
+					+((getRandomIntInclusive(110, 420)) / 100).toFixed(2),
+				isTrue: firstTeamTotalNumber > 1.5,
+			},
+			lessThan1_5: {
+				keyName: 'lessThan1_5',
+				displayName: 'Меньше 1.5',
+				value:
+					+((getRandomIntInclusive(110, 420)) / 100).toFixed(2),
+				isTrue: firstTeamTotalNumber < 1.5,
+			},
+		},
+		secondTeamTotal: {
+			displayName: 'Тотал команды 2',
+			keyName: 'secondTeamTotal',
+			moreThan0_5: {
+				keyName: 'moreThan0_5',
+				displayName: 'Больше 0.5',
+				value:
+					+((getRandomIntInclusive(110, 420)) / 100).toFixed(2),
+				isTrue: secondTeamTotalNumber > 0.5,
+			},
+			lessThan0_5: {
+				keyName: 'lessThan0_5',
+				displayName: 'Меньше 0.5',
+				value:
+					+((getRandomIntInclusive(110, 420)) / 100).toFixed(2),
+				isTrue: secondTeamTotalNumber < 0.5,
+			},
+			moreThan1_5: {
+				keyName: 'moreThan1_5',
+				displayName: 'Больше 1.5',
+				value:
+					+((getRandomIntInclusive(110, 420)) / 100).toFixed(2),
+				isTrue: secondTeamTotalNumber > 1.5,
+			},
+			lessThan1_5: {
+				keyName: 'lessThan1_5',
+				displayName: 'Меньше 1.5',
+				value:
+					+((getRandomIntInclusive(110, 420)) / 100).toFixed(2),
+				isTrue: secondTeamTotalNumber < 1.5,
+			},
+		},
+		ifOvertime: {
+			displayName: 'Будет ли овертайм',
+			keyName: 'ifOvertime',
+			overtimeTrue: {
+				keyName: 'overtimeTrue',
+				displayName: 'Да',
+				value:
+					+((getRandomIntInclusive(110, 420)) / 100).toFixed(2),
+				isTrue: overtimeTrue,
+			},
+			overtimeFalse: {
+				keyName: 'overtimeFalse',
+				displayName: 'Нет',
+				value:
+					+((getRandomIntInclusive(110, 420)) / 100).toFixed(2),
+				isTrue: !overtimeTrue,
+			},
+		},
+	};
+
+	return {
+		firstTeamName,
+		secondTeamName,
+		coefficients,
+		scoreString,
+	};
+};
+
+// single match creation for apps with coefficients dropdowns -- end

@@ -37,3 +37,61 @@ export const loadingAlertColor2: string = 'rgb(159,239,97)';
 // export const loadingAlertColor2: string = 'rgb(155,191,55)';
 //number between 20 and 36
 export const loadingAlertIndicatorSize: 'small' | 'large' | number = 'small';
+
+
+// single match creation for apps with coefficients dropdowns -- start
+
+export const teamNames: Array<string> = [
+	'Авангард',
+	'Авто',
+	'Автомобилист',
+	'Адмирал',
+	'Ак Барс',
+	'Алмаз',
+	'Алтай',
+	'Амур',
+	'Барс',
+	'Буран',
+	'Витязь',
+	'Горняк',
+	'Дизелист',
+	'Дизель',
+	'Динамо',
+	'Ермак',
+	'Зауралье',
+	'Звезда',
+	'Ижсталь',
+	'Ирбис',
+	'Кристалл',
+	'Лада',
+	'Ладья',
+	'Локо',
+	'Липецк',
+	'Олимпия',
+	'Спартак',
+	'Нефтяник',
+	'Полёт',
+	'Прогресс',
+	'Реактор',
+	'Ростов',
+	'Рубин',
+	'Сарматы',
+	'Сокол',
+	'Спутник',
+	'Толпар',
+	'Торос',
+	'Торпедо',
+	'Трактор',
+	'Химик',
+	'Брянск',
+	'Рязань',
+	'Сочи',
+	'Тамбов',
+	'Чайка',
+	'Челмет',
+	'Челны',
+	'Югра',
+	'Юниор',
+];
+
+// single match creation for apps with coefficients dropdowns -- end
