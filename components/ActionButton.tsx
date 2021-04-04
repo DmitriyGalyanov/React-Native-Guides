@@ -3,11 +3,12 @@ import React from 'react';
 
 import {
 	StyleSheet,
-	ViewStyle,
+	Text,
 	TextStyle,
 	TouchableOpacity,
-	Text,
+	ViewStyle,
 } from 'react-native';
+import { colors } from '../constants';
 
 type ActionButtonProps = 	{
 	onPress: Function,
@@ -33,6 +34,7 @@ export function ActionButton(
 		>
 			<Text style={[styles.titleText, {
 				color: accentColor,
+				elevation: mainColor === 'transparent' ? 0 : 8,
 			}]}>
 				{title}
 			</Text>
@@ -53,11 +55,15 @@ const styles = StyleSheet.create<Styles>({
 		borderWidth: 2,
 		borderRadius: 8,
 		alignItems: 'center',
-		elevation: 8,
 	},
 	titleText: {
 		fontSize: 22,
 		fontWeight: 'bold',
+		textShadowColor: colors.black,
+		textShadowOffset: {
+			width: 1,
+			height: 1,
+		},
+		textShadowRadius: 4,
 	},
 });
-
