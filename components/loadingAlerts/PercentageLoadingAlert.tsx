@@ -3,16 +3,19 @@ import React, { useState, useEffect } from 'react';
 
 import { StyleSheet, View, ViewStyle, Text, TextStyle } from 'react-native';
 
+import {
+	loadingAlertColor1,
+	loadingAlertColor2,
+	loadingAlertText,
+} from '../constants';
+
 
 const initialProgress: number = 0;
 const maxProgress: number = 90;
 const animTickDuration: number = 20;
 const progressInTick: number = 1;
 
-export function PercentageLoadingAlert(
-	{alertText, alertTextColor, percentageTextColor}:
-	{alertText: string, alertTextColor: string, percentageTextColor: string}
-): JSX.Element {
+export function PercentageLoadingAlert(): JSX.Element {
 	const [progress, setProgress] = useState<number>(initialProgress);
 
 	useEffect(() => {
@@ -31,13 +34,13 @@ export function PercentageLoadingAlert(
 	return (
 		<View style={styles.wrap}>
 			<Text style={[styles.alertText, {
-				color: alertTextColor,
+				color: loadingAlertColor1,
 			}]}>
-				{alertText}
+				{loadingAlertText}
 			</Text>
 			<Text
 				style={{
-					color: percentageTextColor,
+					color: loadingAlertColor2,
 				}}
 			>
 				{progress}%
