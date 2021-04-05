@@ -30,11 +30,11 @@ export function ActionButton(
 				backgroundColor: mainColor,
 				borderColor: accentColor,
 				opacity: disabled ? 0.5 : 1,
+				elevation: mainColor === 'transparent' ? 0 : 8,
 			}]}
 		>
 			<Text style={[styles.titleText, {
 				color: accentColor,
-				elevation: mainColor === 'transparent' ? 0 : 8,
 			}]}>
 				{title}
 			</Text>
@@ -49,7 +49,7 @@ type Styles = {
 
 const styles = StyleSheet.create<Styles>({
 	wrap: {
-		minWidth: 140,
+		minWidth: 180,
 		paddingVertical: 14,
 		paddingHorizontal: 12,
 		borderWidth: 2,
