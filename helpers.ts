@@ -67,6 +67,30 @@ export const getRandomNonRepeatSequence
 	return sequence;
 };
 
+/**
+ * Shuffles PROVIDED array
+ * @returns shuffled PROVIDED array
+ */
+ export const shuffleArray = (array: Array<any>): Array<any> => {
+	const localArray: Array<any> = array;
+	for (let i = localArray.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[localArray[i], localArray[j]] = [localArray[j], localArray[i]];
+	};
+	return localArray;
+};
+
+/**
+ * @returns shuffled COPY of provided array
+ */
+ export const getShuffledArray = (array: Array<any>): Array<any> => {
+	const localArray: Array<any> = [...array];
+	for (let i = localArray.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[localArray[i], localArray[j]] = [localArray[j], localArray[i]];
+	};
+	return localArray;
+};
 //specific helpers
 // import {leaguesImagesArray} from '../assets/images';
 import {
