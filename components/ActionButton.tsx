@@ -10,8 +10,8 @@ import {
 } from 'react-native';
 import { colors } from '../constants';
 
-type ActionButtonProps = 	{
-	onPress: Function,
+type ActionButtonProps = {
+	onPress: () => void,
 	disabled?: boolean,
 	mainColor: string,
 	accentColor: string,
@@ -19,28 +19,33 @@ type ActionButtonProps = 	{
 };
 
 
-export function ActionButton(
-	{onPress, disabled, mainColor, accentColor, title}: ActionButtonProps
-): JSX.Element {
-	return (
-		<TouchableOpacity
-			onPress={() => onPress()}
-			disabled={disabled}
-			style={[styles.wrap, {
-				backgroundColor: mainColor,
-				borderColor: accentColor,
-				opacity: disabled ? 0.5 : 1,
-				elevation: mainColor === 'transparent' ? 0 : 8,
-			}]}
-		>
-			<Text style={[styles.titleText, {
-				color: accentColor,
-			}]}>
-				{title}
-			</Text>
-		</TouchableOpacity>
-	);
-}
+export const ActionButton: React.FC<ActionButtonProps> =
+	({
+		 onPress,
+		 disabled,
+		 mainColor,
+		 accentColor,
+		 title,
+	 }) => {
+		return (
+			<TouchableOpacity
+				onPress={() => onPress()}
+				disabled={disabled}
+				style={[styles.wrap, {
+					backgroundColor: mainColor,
+					borderColor: accentColor,
+					opacity: disabled ? 0.5 : 1,
+					elevation: mainColor === 'transparent' ? 0 : 8,
+				}]}
+			>
+				<Text style={[styles.titleText, {
+					color: accentColor,
+				}]}>
+					{title}
+				</Text>
+			</TouchableOpacity>
+		);
+	};
 
 type Styles = {
 	wrap: ViewStyle,
