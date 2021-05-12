@@ -1,6 +1,6 @@
 // Proceed to android/app/src/main/java/.../MainActivity.Java:
 
-//add following imports
+//Facebook Deferred Deep Link -- START
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.applinks.AppLinkData;
 import android.os.Bundle; // required for onCreate parameter
@@ -8,20 +8,24 @@ import android.net.Uri;
 import android.util.Log;
 import androidx.annotation.Nullable;
 import com.facebook.FacebookSdk; //required for initialization
-import com.facebook.react.ReactActivity;
 import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
-// end of imports
+
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+//Facebook Deferred Deep Link -- END
 
 public class MainActivity extends ReactActivity {
-  // add following [START]
+  //Facebook Deferred Deep Link -- START
   public static final String EVENT_KEY = "JavaDeepLinkToJs"; //"javaToJS"
   public static final String DEEP_LINK_TARGET_URI_KEY = "deepLinkTargetUri";
   public static final String IS_NOT_AVAILABLE = "is not available";
   public static Uri appLinkTargetUri;
 
-  private void emitDeepLinkEventToJs() {
+  private void emitDeepLinkEventToJs(ReactContext reactContext) {
     Log.d("DeepLink", "emitting Deep Link Event to JS");
     WritableMap eventMap = Arguments.createMap();
     eventMap.putString("type", EVENT_KEY);
@@ -32,8 +36,8 @@ public class MainActivity extends ReactActivity {
       Log.d("DeepLink", "appLinkTargetUri: " + IS_NOT_AVAILABLE);
       eventMap.putString(DEEP_LINK_TARGET_URI_KEY, IS_NOT_AVAILABLE);
     }
-    getReactInstanceManager().getCurrentReactContext()
-            .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+
+    reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
             .emit(EVENT_KEY, eventMap);
   }
 
@@ -54,7 +58,20 @@ public class MainActivity extends ReactActivity {
                 if (appLinkData != null) {
                   appLinkTargetUri = appLinkData.getTargetUri();
                   Log.d("DeepLink", "appLinkData != null. Event with appLinkData is being emitted to JS");
-                  emitDeepLinkEventToJs();
+                  ReactContext reactContext = getReactInstanceManager().getCurrentReactContext();
+                  Log.d("DeepLink", "reactContext pre-timer: " + reactContext);
+                  TimerTask task = new TimerTask() {
+                    public void run() {
+                      System.out.println("Task performed on: " + new Date() + "\n" +
+                              "Thread's name: " + Thread.currentThread().getName());
+                      Log.d("DeepLink", "reactContext in-timer: " + reactContext);
+                      emitDeepLinkEventToJs(reactContext);
+                    }
+                  };
+                  Timer timer = new Timer("Timer");
+
+                  long delay = 1000L;
+                  timer.schedule(task, delay);
                   Log.d("DeepLink", "appLinkData (inside onDeferredAppLinkDataFetched()): " + appLinkData);
                   Log.d("DeepLink", "appLinkData.getTargetUri() (appLinkTargetUri) (inside onDeferredAppLinkDataFetched()): " + appLinkTargetUri);
                 }
@@ -62,6 +79,6 @@ public class MainActivity extends ReactActivity {
             });
     Log.d("DeepLink", "appLinkData.getTargetUri() result: " + appLinkTargetUri);
   }
-  // add following [END]
+  //Facebook Deferred Deep Link -- END
   ...
 }

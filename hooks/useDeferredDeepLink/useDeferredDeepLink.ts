@@ -1,57 +1,89 @@
-//@ts-nocheck
+// @ts-nocheck
 import {useState, useEffect} from 'react';
+import {
+	EmitterSubscription,
+	NativeEventEmitter,
+	NativeModules,
+} from 'react-native';
+import {
+	JAVA_DEEP_LINK_TO_JS_EVENT_KEY,
+	DEEP_LINK_TARGET_URI_KEY,
+	DEEP_LINK_IS_NOT_AVAILABLE_KEY,
+	fbDeepLinkParsingReplaces,
+	fbDeepLinkParsingSeparator,
+} from './src/constants';
 
-import { DeviceEventEmitter, EmitterSubscription } from 'react-native';
+// redux
+import { TypedUseSelectorHook, useSelector } from 'react-redux';
+import { RootState, useAppDispatch } from './src/redux/store';
+import {
+	setDeepLinkParsedData,
+} from './src/redux/stateSlices';
+const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 import {log} from '../logger';
-
-const EVENT_KEY: string = 'JavaDeepLinkToJs';
-const DEEP_LINK_TARGET_URI_KEY: string = 'deepLinkTargetUri';
-const IS_NOT_AVAILABLE: string = 'is not available';
 
 /**
  * Custom Hook that obtains deferred deep link url
  * @returns deferred deep link target URI trimmed from '?'
  */
-export const useDeepLinkUrl = (): string => {
-	const [deepLinkUrl, setDeepLinkUrl] = useState<string>('');
-
-	useEffect(() => {
-		const listener: EmitterSubscription = DeviceEventEmitter
-		.addListener(EVENT_KEY, handleEvent);
-		return () => {
-			// it works fine but TS is yelling. IDK
-			DeviceEventEmitter.removeListener(listener);
-		};
-	}, []);
-
-	const handleEvent = (event: any) => {
-		log.use_deep_link_url_hook('Event: ', event);
+export const useDeferredDeepLink = (): string => {
+	// deep link event handler
+	const handleJavaDeepLinkToJsEvent = (event: {[key: string]: string}) => {
+		log.fb_app_link('Deep Link Event emitted from Java to JS: ', event);
 		const targetUri: string = event[DEEP_LINK_TARGET_URI_KEY];
-		log.use_deep_link_url_hook('Deep Link Target URI: ' + targetUri);
-		if (targetUri === IS_NOT_AVAILABLE) return;
-		setDeepLinkUrl(targetUri);
+		if (targetUri === DEEP_LINK_IS_NOT_AVAILABLE_KEY) {
+			log.fb_app_link('Deep Link Target URI is NOT available, ' +
+			                'aborting obtain attempt');
+			return;
+		};
+		if (targetUri) {
+			log.fb_app_link('Deep Link Target URI RECEIVED: ' + targetUri);
+			const parsedTargetUri: string = cutAndReplace(
+				targetUri,
+				fbDeepLinkParsingSeparator,
+				fbDeepLinkParsingReplaces,
+				'DeepLinkTargetUri',
+			);
+			log.fb_app_link('Deep Link Target URI parsed, ' +
+			                'Setting storage.deepLinkParsedData, ' +
+			                'Value: ' + parsedTargetUri);
+			useAppDispatch(setDeepLinkParsedData(parsedTargetUri));
+		};
 	};
+
+	const [javaDeepLinkToJsListener, setJavaDeepLinkToJsListener] =
+		useState<EmitterSubscription | null>(null);
 
 	useEffect(() => {
-		if (deepLinkUrl && deepLinkUrl?.indexOf('?') !== -1) {
-			const targetUriTrimmed: string = deepLinkUrl.split('?')[1];
-			log.use_deep_link_url_hook('Target Uri Trimmed from \'?\': '
-			                           + targetUriTrimmed);
-			setDeepLinkUrl(targetUriTrimmed);
+		if (!deepLinkParsedData) {
+			log.fb_app_link('Subscribing to ' + JAVA_DEEP_LINK_TO_JS_EVENT_KEY +
+			                ' JAVA EVENTS CHANNEL in ATTEMPT to ' +
+			                'receive Deep Link Data');
+			const javaDeepLinkToJsEmitter: NativeEventEmitter =
+				new NativeEventEmitter(NativeModules.ToastExample);
+			setJavaDeepLinkToJsListener(
+				javaDeepLinkToJsEmitter.addListener(
+					JAVA_DEEP_LINK_TO_JS_EVENT_KEY,
+					handleJavaDeepLinkToJsEvent,
+				)
+			);
 		};
-	}, [deepLinkUrl]);
 
-	if (deepLinkUrl === '' ||
-	    deepLinkUrl === IS_NOT_AVAILABLE ||
-	    deepLinkUrl?.indexOf('?') !== -1) {
-		log.use_deep_link_url_hook('Return at final check,'
-			+ 'either deepLinkUrl === \'\', deepLinkUrl === IS_NOT_AVAILABLE'
-			+ 'or deepLinkUrl still has \'?\' in it (not trimmed)'
-			+ 'current deepLinkUrl: ' + deepLinkUrl);
-		return '';
-	};
-	log.use_deep_link_url_hook(
-		'This string must be returned from useDeepLinkUrl() hook: ' + deepLinkUrl);
-	return deepLinkUrl;
+		if (deepLinkParsedData) {
+			log.fb_app_link('Cancelling (if was registered) ' +
+			                JAVA_DEEP_LINK_TO_JS_EVENT_KEY +
+			                ' JAVA EVENTS CHANNEL Subscription ' +
+			                'since Facebook Deferred Deep Link (App Link) ' +
+			                'Data is STORED');
+			javaDeepLinkToJsListener?.remove();
+		};
+
+		return () => {
+			log.fb_app_link('Cancelling ' + JAVA_DEEP_LINK_TO_JS_EVENT_KEY +
+			                ' JAVA EVENTS CHANNEL Subscription ' +
+			                'since Component UNMOUNTS');
+			javaDeepLinkToJsListener?.remove();
+		};
+	}, [deepLinkParsedData]);
 };
