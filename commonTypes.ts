@@ -1,4 +1,11 @@
 //@ts-nocheck
+//used for helpers.cutAndReplace() method
+export type Replaces = {
+	searchValue: string,
+	replaceValue: string,
+};
+
+
 
 //these are for gameState Context example -- start
 import {colors} from './constants';

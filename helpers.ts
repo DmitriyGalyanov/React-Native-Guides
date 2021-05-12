@@ -91,6 +91,55 @@ export const getRandomNonRepeatSequence
 	};
 	return localArray;
 };
+
+
+import {log} from './logger';
+
+import { Replaces } from './commonTypes';
+
+/**
+ * There must be **SINGLE SEPARATOR** in the initString
+ *
+ * Cuts everything _before_ Separator
+ *
+ * Replaces **all** _replaces.searchValue_ with _replaces.replaceValue_
+ * */
+export const cutAndReplace = (
+	initString: string,
+	separator: string,
+	replaces?: Replaces,
+	stringName?: string,
+): string => {
+	log.cut_and_replace(
+		`Received parameters: 
+			stringName: ${stringName ?? 'Not defined'},
+			initString: ${initString},
+			separator: ${separator},
+			replaces:`, replaces ?? 'Not defined');
+	let result: string = initString;
+	if (initString && initString?.indexOf(separator) !== -1) {
+		log.cut_and_replace('initString has separator inside, cutting');
+		//part of the string after the separator
+		const cutString: string = initString.split(separator)[1];
+		log.cut_and_replace('initString successfully cutted, result: ' + cutString);
+		result = cutString;
+	};
+
+	if (replaces && 'searchValue' in replaces && 'replaceValue' in replaces) {
+		log.cut_and_replace('Correct replaces object was PROVIDED, replacing');
+		const {searchValue: from, replaceValue: to} = replaces;
+		while (result.indexOf(from) !== -1) {
+			result = result.replace(from, to);
+		};
+		log.cut_and_replace('Replacing finished, resulting value: ' + result);
+	} else {
+		log.cut_and_replace('Correct replaces object was NOT provided, ' +
+		                    'returning cut string, value: ' + result);
+	};
+	return result;
+};
+
+
 //specific helpers
 // import {leaguesImagesArray} from '../assets/images';
 import {
